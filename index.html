@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookShelf BD, Minimalist Virtual Library & Reading Tracker</title>
+  <meta name="description" content="Track your reading habits and explore a minimalist digital library designed for book lovers in Bangladesh.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3Ccircle%20cx='24'%20cy='24'%20r='23'%20fill='%231D7F4F'/%3E%3Ccircle%20cx='24'%20cy='24'%20r='19.5'%20fill='none'%20stroke='%23FF7A1A'%20stroke-width='1.5'/%3E%3Cg%20transform='translate(12%2012)'%20fill='none'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cg%20stroke='%23FFFFFF'%3E%3Cpath%20d='M12%203l2.4%205.6L20%2011l-5.6%202.4L12%2019l-2.4-5.6L4%2011l5.6-2.4z'/%3E%3C/g%3E%3Cg%20stroke='%23FF7A1A'%3E%3Cpath%20d='M19.5%204.5h.01M4.5%2019.5h.01'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: 'var(--bc-primary)',
+            secondary: 'var(--bc-secondary)',
+            ground: 'var(--bc-ground)',
+            ink: 'var(--bc-ink)'
+          },
+          fontFamily: {
+            heading: 'var(--bc-font-heading)',
+            body: 'var(--bc-font-body)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bc-primary: #1D7F4F;
+      --bc-secondary: #FF7A1A;
+      --bc-on-primary: #FFFFFF;
+      --bc-on-secondary: #13261C;
+      --bc-ground: #FFFFFF;
+      --bc-ink: #13261C;
+      --bc-font-heading: 'Anek Latin', 'Hind Siliguri', sans-serif;
+      --bc-font-body: 'Hind Siliguri', sans-serif;
+    }
+    body {
+      font-family: var(--bc-font-body);
+      color: var(--bc-ink);
+      background-color: var(--bc-ground);
+      letter-spacing: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--bc-font-heading);
+    }
+    .pill-btn {
+      border-radius: 999px;
+    }
+    .panel-box {
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+  </style>
+<meta property="og:title" content="BookShelf BD, Minimalist Virtual Library &amp; Reading Tracker">
+<meta property="og:description" content="Track your reading habits and explore a minimalist digital library designed for book lovers in Bangladesh.">
+<style id="bc-logo-css">:where([data-bc-logo]){color:inherit;text-decoration:none}</style>
+</head>
+<body class="bg-ground text-ink antialiased selection:bg-secondary selection:text-ink-2">
+
+  <!-- Header: মাঝে মনোগ্রাম (Centered Monogram Style) -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Desktop Left Nav -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <a href="#search" class="hover:text-primary transition">Book Search</a>
+        <a href="#tracker" class="hover:text-primary transition">Reading Tracker</a>
+        <a href="#library" class="hover:text-primary transition">Digital Library</a>
+      </nav>
+
+      <!-- Center Logo -->
+      <a href="#top" class="flex items-center space-x-3 group" data-bc-logo>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="40" height="40" overflow="visible" style="height:40px;width:auto;max-width:100%;flex:none;display:block;" role="img" aria-label="logo"><circle cx="24" cy="24" r="23" fill="#1D7F4F"/><circle cx="24" cy="24" r="19.5" fill="none" stroke="#FF7A1A" stroke-width="1.5"/><g transform="translate(12 12)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF"><path d="M12 3l2.4 5.6L20 11l-5.6 2.4L12 19l-2.4-5.6L4 11l5.6-2.4z"/></g><g stroke="#FF7A1A"><path d="M19.5 4.5h.01M4.5 19.5h.01"/></g></g></svg>
+        <span class="text-xl font-bold tracking-tight text-primary font-heading">BookShelf BD</span>
+      </a>
+
+      <!-- Desktop Right Nav & CTA -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <a href="#community" class="hover:text-primary transition">Community</a>
+        <a href="#profile" class="hover:text-primary transition">My Profile</a>
+        <a href="#search" class="bg-secondary text-on-secondary px-5 py-2.5 pill-btn font-bold hover:opacity-90 transition shadow-md">Explore Now</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-toggle" class="md:hidden p-2 rounded-xl text-primary focus:outline-none" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 px-6 py-6 space-y-4 shadow-xl">
+      <a href="#search" class="block font-medium text-lg hover:text-primary">Book Search</a>
+      <a href="#tracker" class="block font-medium text-lg hover:text-primary">Reading Tracker</a>
+      <a href="#library" class="block font-medium text-lg hover:text-primary">Digital Library</a>
+      <a href="#community" class="block font-medium text-lg hover:text-primary">Community Board</a>
+      <a href="#profile" class="block font-medium text-lg hover:text-primary">My Profile</a>
+      <div class="pt-2">
+        <a href="#search" class="inline-block w-full text-center bg-secondary text-on-secondary py-3 pill-btn font-bold shadow">Explore Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section: পূর্ণ পর্দা হিরো with Wave bottom -->
+  <section id="top" class="relative bg-primary text-on-primary min-h-[88svh] flex flex-col justify-between overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-20">
+      <img src="https://images.pexels.com/photos/10027581/pexels-photo-10027581.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" data-bc-photo-id="10027581" alt="Library Background" class="w-full h-full object-cover" data-bc-photo-by="Osman Özümüt" data-bc-photo-page="https://www.pexels.com/photo/brown-wooden-shelf-with-books-10027581/">
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 text-center my-auto">
+      <div class="inline-block bg-secondary text-on-secondary px-4 py-1.5 rounded-full font-bold text-xs tracking-wider uppercase mb-6 border-2 border-white/20">
+        BANGLADESH'S DIGITAL READING COMPANION
+      </div>
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight font-heading">
+        Track Your Reading Habits & Explore Digital Library
+      </h1>
+      <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-10 text-white/90 font-light">
+        Manage your reading goals, discover public domain masterpieces, upload your personal collection, and connect with fellow book lovers across Bangladesh.
+      </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#tracker" class="bg-secondary text-on-secondary px-8 py-4 pill-btn font-bold text-lg hover:scale-105 transition shadow-lg">
+            Track your reading habits and explore the digital library
+          </a>
+          <a href="#library" class="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 px-8 py-4 pill-btn font-bold text-lg transition">
+            Get Started
+          </a>
+        </div>
+    </div>
+
+    <!-- Wavy Bottom Edge -->
+    <div class="relative z-10 w-full overflow-hidden leading-none">
+      <svg class="relative block w-full h-12 sm:h-20 text-ground" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.61,199,112.5,239.5,107.12,280.9,78.29,321.39,56.44Z" fill="currentColor"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Book Search & Fetch Section -->
+  <section id="search" class="py-20 bg-ground">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-primary font-bold tracking-widest uppercase text-xs">LIVE API SEARCH</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-heading">Search Any Book Worldwide</h2>
+        <p class="text-gray-600 mt-2">Instantly fetch book details, covers, and author information using Open Library.</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto panel-box p-4 bg-emerald-50/50 border border-emerald-100 flex flex-col sm:flex-row gap-3">
+        <input type="text" id="book-search-input" placeholder="Type book name (e.g. Srikanta, Feluda, Atomic Habits)..." class="flex-grow px-5 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary bg-white text-ink">
+        <button id="book-search-btn" class="bg-primary text-on-primary px-8 py-3.5 pill-btn font-bold hover:opacity-95 transition shadow">
+          Search Book
+        </button>
+      </div>
+
+      <!-- Search Results Grid -->
+      <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <!-- Default sample fetched card -->
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+          <div>
+            <div class="h-48 bg-emerald-100 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/1098601/pexels-photo-1098601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="1098601" alt="Book Cover" class="w-full h-full object-cover" data-bc-photo-by="Suzy Hazelwood" data-bc-photo-page="https://www.pexels.com/photo/photography-of-books-on-bookshelf-1098601/">
+            </div>
+            <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Classic Fiction</span>
+            <h3 class="font-bold text-lg mt-3 font-heading">Shesher Kobita</h3>
+            <p class="text-sm text-gray-600 mt-1">Rabindranath Tagore</p>
+          </div>
+          <button onclick="addToMyList('Shesher Kobita', 'Rabindranath Tagore', 'Want to Read')" class="mt-6 w-full bg-primary text-on-primary py-2.5 pill-btn text-sm font-semibold hover:opacity-90 transition">
+            + Add to Reading List
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Reading List & Tracker -->
+  <section id="tracker" class="py-20 bg-emerald-50/40 border-y border-emerald-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div>
+          <span class="text-primary font-bold tracking-widest uppercase text-xs">HABIT TRACKER</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-heading">My Reading List & Progress</h2>
+        </div>
+        <div class="mt-4 md:mt-0 flex gap-4">
+          <div class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-emerald-100 text-center">
+            <span class="block text-2xl font-bold text-primary" id="stat-completed">0</span>
+            <span class="text-xs text-gray-500 font-medium">Completed</span>
+          </div>
+          <div class="bg-white px-5 py-3 rounded-2xl shadow-sm border border-emerald-100 text-center">
+            <span class="block text-2xl font-bold text-secondary" id="stat-reading">1</span>
+            <span class="text-xs text-gray-500 font-medium">Reading</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracker Dashboard Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Currently Reading Card -->
+        <div class="panel-box bg-white p-6 border border-emerald-100 lg:col-span-1">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg font-heading">Currently Reading</h3>
+            <span class="bg-primary text-white text-xs px-2.5 py-1 rounded-full">Active</span>
+          </div>
+          <div class="space-y-3">
+            <h4 class="font-bold text-xl text-primary font-heading">Pother Panchali</h4>
+            <p class="text-sm text-gray-600">Bibhutibhushan Bandyopadhyay</p>
+            <div class="pt-4">
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Progress</span>
+                <span id="progress-text">64% (230 / 360 pages)</span>
+              </div>
+              <div class="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-secondary h-full w-[64%] rounded-full transition-all duration-300"></div>
+              </div>
+            </div>
+            <div class="pt-4 flex gap-2">
+              <button onclick="updateProgress(10)" class="flex-1 bg-emerald-100 text-primary py-2 rounded-xl text-xs font-bold hover:bg-emerald-200 transition">+10 Pages</button>
+              <button onclick="markCompleted()" class="flex-1 bg-primary text-white py-2 rounded-xl text-xs font-bold hover:opacity-90 transition">Mark Completed</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Reading List Table / Cards -->
+        <div class="panel-box bg-white p-6 border border-emerald-100 lg:col-span-2">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-lg font-heading">Reading Shelf & Queue</h3>
+            <button onclick="openAddBookModal()" class="text-xs bg-secondary text-on-secondary px-4 py-2 pill-btn font-bold hover:opacity-90 transition">+ Add Custom Book</button>
+          </div>
+          
+          <div id="reading-list-container" class="space-y-4 max-h-[350px] overflow-y-auto pr-2">
+            <!-- Dynamically populated or default items -->
+            <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+              <div>
+                <h4 class="font-bold font-heading">Amar Dekha Ney چین</h4>
+                <p class="text-xs text-gray-500">Sheikh Mujibur Rahman • Want to Read</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-secondary bg-orange-100 px-3 py-1 rounded-full">Saved</span>
+                <button onclick="removeListItem(this)" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Digital Library & Upload Section -->
+  <section id="library" class="py-20 bg-ground">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div>
+          <span class="text-primary font-bold tracking-widest uppercase text-xs">FREE PUBLIC LIBRARY</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-heading">Digital Library & Uploads</h2>
+        </div>
+        <p class="text-gray-600 max-w-md mt-2 md:mt-0">Browse open-access Bengali and English classics or upload your personal notes and PDF books.</p>
+      </div>
+
+      <!-- Library Books Grid (Expanded with more free public books) -->
+      <div id="library-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between">
+          <div>
+            <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/14447171/pexels-photo-14447171.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="14447171" alt="Library Book" class="w-full h-full object-cover" data-bc-photo-by="Matteo Angeloni" data-bc-photo-page="https://www.pexels.com/photo/books-on-brown-wooden-shelves-inside-a-room-14447171/">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Free PDF</span>
+              <span class="text-xs font-bold text-gray-500">৳0.00</span>
+            </div>
+            <h3 class="font-bold text-xl font-heading">Anandamath</h3>
+            <p class="text-sm text-gray-600 mt-1">Bankim Chandra Chattopadhyay</p>
+          </div>
+          <a href="#reader" onclick="openReader('Anandamath', 'Bankim Chandra Chattopadhyay')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+            Read Online Now
+          </a>
+        </div>
+
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between">
+          <div>
+            <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/37165246/pexels-photo-37165246.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="37165246" alt="Library Book" class="w-full h-full object-cover" data-bc-photo-by="Melike" data-bc-photo-page="https://www.pexels.com/photo/cozy-library-bookshelf-with-diverse-collection-37165246/">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Free E-Book</span>
+              <span class="text-xs font-bold text-gray-500">৳0.00</span>
+            </div>
+            <h3 class="font-bold text-xl font-heading">Geetanjali</h3>
+            <p class="text-sm text-gray-600 mt-1">Rabindranath Tagore</p>
+          </div>
+          <a href="#reader" onclick="openReader('Geetanjali', 'Rabindranath Tagore')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+            Read Online Now
+          </a>
+        </div>
+
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between">
+          <div>
+            <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/13695499/pexels-photo-13695499.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="13695499" alt="Library Book" class="w-full h-full object-cover" data-bc-photo-by="Elif Gökçe" data-bc-photo-page="https://www.pexels.com/photo/shelves-with-books-in-a-library-13695499/" loading="lazy">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Free PDF</span>
+              <span class="text-xs font-bold text-gray-500">৳0.00</span>
+            </div>
+            <h3 class="font-bold text-xl font-heading">Srikanta (Part 1)</h3>
+            <p class="text-sm text-gray-600 mt-1">Sarat Chandra Chattopadhyay</p>
+          </div>
+          <a href="#reader" onclick="openReader('Srikanta', 'Sarat Chandra Chattopadhyay')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+            Read Online Now
+          </a>
+        </div>
+
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between">
+          <div>
+            <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/1480335/pexels-photo-1480335.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="1480335" alt="Library Book" class="w-full h-full object-cover" data-bc-photo-by="Suzy Hazelwood" data-bc-photo-page="https://www.pexels.com/photo/closeup-photo-of-pride-and-prejudice-book-page-1480335/" loading="lazy">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Free E-Book</span>
+              <span class="text-xs font-bold text-gray-500">৳0.00</span>
+            </div>
+            <h3 class="font-bold text-xl font-heading">Pride and Prejudice</h3>
+            <p class="text-sm text-gray-600 mt-1">Jane Austen</p>
+          </div>
+          <a href="#reader" onclick="openReader('Pride and Prejudice', 'Jane Austen')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+            Read Online Now
+          </a>
+        </div>
+
+        <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between">
+          <div>
+            <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+              <img src="https://images.pexels.com/photos/34919026/pexels-photo-34919026.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" data-bc-photo-id="34919026" alt="Library Book" class="w-full h-full object-cover" data-bc-photo-by="Sóc Năng Động" data-bc-photo-page="https://www.pexels.com/photo/joyful-woman-with-sherlock-holmes-books-in-library-34919026/" loading="lazy">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Free PDF</span>
+              <span class="text-xs font-bold text-gray-500">৳0.00</span>
+            </div>
+            <h3 class="font-bold text-xl font-heading">The Adventures of Sherlock Holmes</h3>
+            <p class="text-sm text-gray-600 mt-1">Arthur Conan Doyle</p>
+          </div>
+          <a href="#reader" onclick="openReader('Sherlock Holmes', 'Arthur Conan Doyle')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+            Read Online Now
+          </a>
+        </div>
+
+        <!-- Upload Card Prompt -->
+        <div class="panel-box bg-emerald-900 text-white p-8 flex flex-col justify-between">
+          <div>
+            <span class="bg-secondary text-on-secondary text-xs font-bold px-2.5 py-1 rounded-full">CONTRIBUTE</span>
+            <h3 class="font-bold text-2xl mt-4 font-heading">Have your own book or study notes?</h3>
+            <p class="text-sm text-emerald-100 mt-2">Upload your PDF or write recommendations to share with thousands of Bangladeshi readers.</p>
+          </div>
+          <button onclick="openUploadModal()" class="mt-6 w-full bg-secondary text-on-secondary py-3.5 pill-btn font-bold hover:opacity-90 transition shadow-lg">
+            Upload New Book
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Discussion Board -->
+  <section id="community" class="py-20 bg-emerald-50/40 border-y border-emerald-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-primary font-bold tracking-widest uppercase text-xs">COMMUNITY FEED</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-heading">Book Lovers' Discussion Board</h2>
+        <p class="text-gray-600 mt-2">Share reviews, thoughts, and recommendations in a Reddit-style community feed.</p>
+      </div>
+
+      <!-- Post Creation Box -->
+      <div class="max-w-2xl mx-auto panel-box bg-white p-6 border border-emerald-100 mb-10">
+        <h3 class="font-bold text-lg mb-4 font-heading">Share Your Reading Thought</h3>
+        <form id="community-form" onsubmit="handlePostSubmit(event)" class="space-y-4">
+          <input type="text" id="post-author" placeholder="Your Name (e.g. Tanvir Ahmed)" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+          <textarea id="post-content" rows="3" placeholder="Write your book review or reading update here..." required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm"></textarea>
+          <div class="flex justify-between items-center">
+            <select id="post-tag" class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-medium bg-white">
+              <option value="#BookReview">#BookReview</option>
+              <option value="#DhakaBookLovers">#DhakaBookLovers</option>
+              <option value="#Recommendations">#Recommendations</option>
+              <option value="#ClassicLit">#ClassicLit</option>
+            </select>
+            <button type="submit" class="bg-primary text-on-primary px-6 py-2.5 pill-btn text-sm font-bold hover:opacity-95 transition shadow">
+              Post to Community
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Community Posts Feed -->
+      <div id="community-feed" class="max-w-2xl mx-auto space-y-6">
+        
+        <div class="panel-box bg-white p-6 border border-emerald-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">SA</div>
+              <div>
+                <h4 class="font-bold text-sm font-heading">Shakil Ahmed</h4>
+                <span class="text-xs text-gray-400">2 hours ago • #BookReview</span>
+              </div>
+            </div>
+            <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Review</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Just finished reading Syed Waliullah's 'Lal Salu'. The portrayal of rural superstition and religious hypocrisy in 20th-century Bengal is timeless. Highly recommended for every literature enthusiast!
+          </p>
+          <div class="mt-4 pt-4 border-t border-gray-100 flex items-center space-x-6 text-xs text-gray-500 font-semibold">
+            <button onclick="upvotePost(this)" class="flex items-center space-x-1.5 hover:text-primary transition">
+              <span>▲ Upvote</span> (<span class="vote-count">24</span>)
+            </button>
+            <span>5 comments</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- User Profile Section -->
+  <section id="profile" class="py-20 bg-ground">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-primary font-bold tracking-widest uppercase text-xs">USER DASHBOARD</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-heading">My Profile & Bookmarks</h2>
+        <p class="text-gray-600 mt-2">Manage your reading goals, annual challenge, and saved favorite quotes.</p>
+      </div>
+
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Profile Card -->
+        <div class="panel-box bg-white p-6 border border-emerald-100 text-center flex flex-col items-center">
+          <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-3xl font-extrabold mb-4 shadow-md font-heading">
+            BS
+          </div>
+          <h3 class="font-bold text-xl font-heading">Nazmul Hossain</h3>
+          <p class="text-xs text-primary font-semibold mt-0.5">Avid Reader • Dhaka, Bangladesh</p>
+          <div class="w-full mt-6 pt-6 border-t border-gray-100 text-left space-y-2 text-xs">
+            <div class="flex justify-between"><span class="text-gray-500">2025 Reading Goal:</span> <span class="font-bold">24 Books</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Books Read:</span> <span class="font-bold text-primary">14 Books</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Saved Quotes:</span> <span class="font-bold">8 Quotes</span></div>
+          </div>
+        </div>
+
+        <!-- Bookmarks & Quotes -->
+        <div class="panel-box bg-white p-6 border border-emerald-100 md:col-span-2">
+          <h3 class="font-bold text-lg mb-4 font-heading">Favorite Bookmarks & Quotes</h3>
+          <div class="space-y-4">
+            <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+              <p class="text-xs italic text-gray-700">"মানুষের মন বড় অদ্ভুত, তাহার অলিগলি দিয়া কত না অজানা রহস্য বহিয়া চলে।"</p>
+              <span class="block text-[11px] font-bold text-primary mt-2">, Srikanta, Sarat Chandra Chattopadhyay</span>
+            </div>
+            <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+              <p class="text-xs italic text-gray-700">"A room without books is like a body without a soul."</p>
+              <span class="block text-[11px] font-bold text-primary mt-2">, Marcus Tullius Cicero</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <button onclick="alert('Profile settings saved successfully!')" class="w-full bg-primary text-on-primary py-3 pill-btn text-xs font-bold hover:opacity-95 transition shadow">
+              Update Reading Goal
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Reader Modal / View (Hidden by default) -->
+  <div id="reader-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-8 relative shadow-2xl">
+      <button onclick="closeReader()" class="absolute top-6 right-6 text-gray-400 hover:text-ink font-bold text-xl"></button>
+      <span class="bg-secondary text-on-secondary text-xs font-bold px-3 py-1 rounded-full">ONLINE READER</span>
+      <h3 id="reader-title" class="text-2xl font-bold mt-3 font-heading">Book Title</h3>
+      <p id="reader-author" class="text-sm text-gray-500 mb-6">Author Name</p>
+      <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 max-h-[300px] overflow-y-auto text-sm leading-relaxed text-gray-700 space-y-4">
+        <p>Chapter 1: The journey began in a quiet afternoon when the pages whispered ancient tales of Bengal and beyond...</p>
+        <p>As the golden sun set over the horizon, the rivers flowed with relentless grace, mirroring the profound wisdom preserved across generations in inked manuscripts and bound volumes.</p>
+        <p>Reading is not merely a pastime; it is an awakening of consciousness, connecting souls across time and space.</p>
+      </div>
+      <div class="mt-6 flex justify-end gap-3">
+        <button onclick="closeReader()" class="bg-primary text-white px-6 py-2.5 pill-btn text-xs font-bold hover:opacity-90">Close Reader</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Book Modal -->
+  <div id="upload-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 relative shadow-2xl">
+      <button onclick="closeUploadModal()" class="absolute top-6 right-6 text-gray-400 hover:text-ink font-bold text-xl">&times;</button>
+      <h3 class="text-xl font-bold mb-4 font-heading">Upload New Book / Notes</h3>
+      <form id="upload-form" onsubmit="handleUploadSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">Book Title</label>
+          <input type="text" id="upload-title" placeholder="e.g. Advanced Mathematics Notes" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">Author / Creator</label>
+          <input type="text" id="upload-author" placeholder="e.g. Professor Rahim" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">Price (BDT)</label>
+          <input type="text" id="upload-price" placeholder="e.g. ৳150 or Free" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <button type="submit" class="w-full bg-secondary text-on-secondary py-3.5 pill-btn font-bold hover:opacity-90 transition shadow">
+          Publish to Library
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript functionality -->
+  <script>
+    const store = (() => {
+      let mem = {}
+      try {
+        localStorage.setItem('__t', '1'); localStorage.removeItem('__t')
+        return {
+          get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+          set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} },
+        }
+      } catch {
+        return { get: (k, d) => (k in mem ? mem[k] : d), set: (k, v) => { mem[k] = v } }
+      }
+    })();
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if(menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+    }
+
+    // Reading Tracker State
+    let currentPages = 230;
+    const totalPages = 360;
+    let completedCount = store.get('bc_completed', 14);
+    let activeReadingCount = store.get('bc_active', 1);
+
+    function updateProgress(pages) {
+      currentPages = Math.min(totalPages, currentPages + pages);
+      const percent = Math.round((currentPages / totalPages) * 100);
+      document.getElementById('progress-text').innerText = `${percent}% (${currentPages} / ${totalPages} pages)`;
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+    }
+
+    function markCompleted() {
+      completedCount++;
+      store.set('bc_completed', completedCount);
+      document.getElementById('stat-completed').innerText = completedCount;
+      alert('Congratulations! Book marked as completed.');
+    }
+
+    // Reading List Items Management
+    let readingList = store.get('bc_reading_list', [
+      { title: 'Amar Dekha Naya Chin', author: 'Sheikh Mujibur Rahman', status: 'Want to Read' }
+    ]);
+
+    function renderReadingList() {
+      const container = document.getElementById('reading-list-container');
+      if (!container) return;
+      if (readingList.length === 0) {
+        container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No books in reading queue yet.</p>';
+        return;
+      }
+      container.innerHTML = readingList.map((item, index) => `
+        <div class="flex items-center justify-between p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+          <div>
+            <h4 class="font-bold font-heading">${item.title}</h4>
+            <p class="text-xs text-gray-500">${item.author} • ${item.status}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-secondary bg-orange-100 px-3 py-1 rounded-full">${item.status}</span>
+            <button onclick="removeListItem(${index})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addToMyList(title, author, status) {
+      readingList.push({ title, author, status });
+      store.set('bc_reading_list', readingList);
+      renderReadingList();
+      alert(`"${title}" added to your reading list!`);
+    }
+
+    function removeListItem(index) {
+      readingList.splice(index, 1);
+      store.set('bc_reading_list', readingList);
+      renderReadingList();
+    }
+
+    // Book Search API integration
+    const searchBtn = document.getElementById('book-search-btn');
+    const searchInput = document.getElementById('book-search-input');
+    const searchResults = document.getElementById('search-results');
+
+    if (searchBtn && searchInput && searchResults) {
+      searchBtn.addEventListener('click', async () => {
+        const query = searchInput.value.trim();
+        if (!query) return;
+        searchResults.innerHTML = '<p class="col-span-4 text-center py-8 text-sm text-gray-500">Searching books worldwide...</p>';
+        try {
+          const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=4`);
+          const data = await res.json();
+          if (data.docs && data.docs.length > 0) {
+            searchResults.innerHTML = data.docs.map(book => {
+              const title = book.title || 'Untitled';
+              const author = book.author_name ? book.author_name[0] : 'Unknown Author';
+              const coverId = book.cover_i;
+              const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : 'https://images.pexels.com/photos/38769723/pexels-photo-38769723.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+              return `
+                <div class="panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+                  <div>
+                    <div class="h-48 bg-emerald-100 rounded-xl overflow-hidden mb-4 relative">
+                      <img data-bc-template src="${coverUrl}" alt="${title}" class="w-full h-full object-cover">
+                    </div>
+                    <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Open Library</span>
+                    <h3 class="font-bold text-lg mt-3 font-heading line-clamp-1">${title}</h3>
+                    <p class="text-sm text-gray-600 mt-1 line-clamp-1">${author}</p>
+                  </div>
+                  <button onclick="addToMyList('${title.replace(/'/g, "")}', '${author.replace(/'/g, "")}', 'Want to Read')" class="mt-6 w-full bg-primary text-on-primary py-2.5 pill-btn text-sm font-semibold hover:opacity-90 transition">
+                    + Add to Reading List
+                  </button>
+                </div>
+              `;
+            }).join('');
+          } else {
+            searchResults.innerHTML = '<p class="col-span-4 text-center py-8 text-sm text-gray-500">No books found matching your search.</p>';
+          }
+        } catch (err) {
+          searchResults.innerHTML = '<p class="col-span-4 text-center py-8 text-sm text-red-500">Failed to fetch search results. Please try again.</p>';
+        }
+      });
+    }
+
+    // Modal Control Functions
+    function openReader(title, author) {
+      document.getElementById('reader-title').innerText = title;
+      document.getElementById('reader-author').innerText = author;
+      document.getElementById('reader-modal').classList.remove('hidden');
+      document.getElementById('reader-modal').classList.add('flex');
+    }
+
+    function closeReader() {
+      document.getElementById('reader-modal').classList.add('hidden');
+      document.getElementById('reader-modal').classList.remove('flex');
+    }
+
+    function openUploadModal() {
+      document.getElementById('upload-modal').classList.remove('hidden');
+      document.getElementById('upload-modal').classList.add('flex');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('upload-modal').classList.add('hidden');
+      document.getElementById('upload-modal').classList.remove('flex');
+    }
+
+    function handleUploadSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('upload-title').value;
+      const author = document.getElementById('upload-author').value;
+      const price = document.getElementById('upload-price').value;
+      
+      const grid = document.getElementById('library-grid');
+      const newCard = document.createElement('div');
+      newCard.className = 'panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between';
+      newCard.innerHTML = `
+        <div>
+          <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+            <img src="https://images.pexels.com/photos/34924812/pexels-photo-34924812.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Uploaded Book" class="w-full h-full object-cover">
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">User Upload</span>
+            <span class="text-xs font-bold text-gray-500">${price}</span>
+          </div>
+          <h3 class="font-bold text-xl font-heading">${title}</h3>
+          <p class="text-sm text-gray-600 mt-1">${author}</p>
+        </div>
+        <a href="#reader" onclick="openReader('${title}', '${author}')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+          Read Online Now
+        </a>
+      `;
+      grid.insertBefore(newCard, grid.firstChild);
+      closeUploadModal();
+      document.getElementById('upload-form').reset();
+      alert('Book uploaded successfully and added to the library!');
+    }
+
+    // Community Board Handling
+    let communityPosts = store.get('bc_posts', [
+      { author: 'Shakil Ahmed', initials: 'SA', tag: '#BookReview', time: '2 hours ago', text: "Just finished reading Syed Waliullah's 'Lal Salu'. The portrayal of rural superstition and religious hypocrisy in 20th-century Bengal is timeless. Highly recommended!", votes: 24 }
+    ]);
+
+    function renderCommunityFeed() {
+      const feed = document.getElementById('community-feed');
+      if (!feed) return;
+      feed.innerHTML = communityPosts.map((post, idx) => `
+        <div class="panel-box bg-white p-6 border border-emerald-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">${post.initials || 'US'}</div>
+              <div>
+                <h4 class="font-bold text-sm font-heading">${post.author}</h4>
+                <span class="text-xs text-gray-400">${post.time} • ${post.tag}</span>
+              </div>
+            </div>
+            <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Discussion</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">${post.text}</p>
+          <div class="mt-4 pt-4 border-t border-gray-100 flex items-center space-x-6 text-xs text-gray-500 font-semibold">
+            <button onclick="upvotePost(${idx})" class="flex items-center space-x-1.5 hover:text-primary transition">
+              <span>▲ Upvote</span> (<span class="vote-count">${post.votes}</span>)
+            </button>
+            <span>💬 3 comments</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handlePostSubmit(e) {
+      e.preventDefault();
+      const authorName = document.getElementById('post-author').value;
+      const content = document.getElementById('post-content').value;
+      const tag = document.getElementById('post-tag').value;
+      const initials = authorName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+
+      communityPosts.unshift({
+        author: authorName,
+        initials: initials || 'US',
+        tag: tag,
+        time: 'Just now',
+        text: content,
+        votes: 1
+      });
+      store.set('bc_posts', communityPosts);
+      renderCommunityFeed();
+      document.getElementById('community-form').reset();
+      alert('Your thought has been posted to the community feed!');
+    }
+
+    function upvotePost(idx) {
+      communityPosts[idx].votes += 1;
+      store.set('bc_posts', communityPosts);
+      renderCommunityFeed();
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReadingList();
+      renderCommunityFeed();
+      document.getElementById('stat-completed').innerText = completedCount;
+    });
+  </script>bel class="block text-xs font-bold uppercase text-gray-500 mb-1">Book Title</label>
+          <input type="text" id="upload-title" placeholder="e.g. My Poetry Collection" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Author Name</label>
+          <input type="text" id="upload-author" placeholder="e.g. Nazrul Islam" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Price (৳ BDT)</label>
+          <input type="number" id="upload-price" placeholder="0 for Free" value="0" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+        </div>
+        <button type="submit" class="w-full bg-secondary text-on-secondary py-3.5 pill-btn font-bold hover:opacity-90 transition shadow">
+          Publish Book
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-ink text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center space-x-3" data-bc-logo>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="32" height="32"><circle cx="24" cy="24" r="23" fill="#1D7F4F"/><circle cx="24" cy="24" r="19.5" fill="none" stroke="#FF7A1A" stroke-width="1.5"/><g transform="translate(12 12)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF"><path d="M12 3l2.4 5.6L20 11l-5.6 2.4L12 19l-2.4-5.6L4 11l5.6-2.4z"/></g></g></svg>
+        <span class="text-lg font-bold font-heading">BookShelf BD</span>
+      </div>
+      <p class="text-xs text-gray-400">© 2026 BookShelf BD. Minimalist Virtual Library &amp; Reading Tracker.</p>
+    </div>
+  </footer>
+
+  <script>
+    // State management using secure store wrapper
+    const store = (() => {
+      let mem = {}
+      try {
+        localStorage.setItem('__t', '1'); localStorage.removeItem('__t')
+        return {
+          get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+          set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} },
+        }
+      } catch {
+        return { get: (k, d) => (k in mem ? mem[k] : d), set: (k, v) => { mem[k] = v } }
+      }
+    })();
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Reading Tracker state
+    let readingProgress = store.get('bc_progress', { currentPages: 230, totalPages: 360, completedCount: 14, activeTitle: 'Pother Panchali' });
+
+    function updateProgress(pages) {
+      readingProgress.currentPages = Math.min(readingProgress.totalPages, readingProgress.currentPages + pages);
+      store.set('bc_progress', readingProgress);
+      renderTracker();
+    }
+
+    function markCompleted() {
+      readingProgress.currentPages = readingProgress.totalPages;
+      readingProgress.completedCount += 1;
+      store.set('bc_progress', readingProgress);
+      renderTracker();
+      alert('Congratulations! Book marked as completed.');
+    }
+
+    function renderTracker() {
+      const percent = Math.round((readingProgress.currentPages / readingProgress.totalPages) * 100);
+      document.getElementById('progress-text').innerText = `${percent}% (${readingProgress.currentPages} / ${readingProgress.totalPages} pages)`;
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+      document.getElementById('stat-completed').innerText = readingProgress.completedCount;
+    }
+    renderTracker();
+
+    // Modals
+    function openUploadModal() {
+      document.getElementById('upload-modal').classList.remove('hidden');
+      document.getElementById('upload-modal').classList.add('flex');
+    }
+    function closeUploadModal() {
+      document.getElementById('upload-modal').classList.add('hidden');
+      document.getElementById('upload-modal').classList.remove('flex');
+    }
+
+    function openReader(title, author) {
+      document.getElementById('reader-title').innerText = title;
+      document.getElementById('reader-author').innerText = author;
+      document.getElementById('reader-modal').classList.remove('hidden');
+      document.getElementById('reader-modal').classList.add('flex');
+    }
+    function closeReader() {
+      document.getElementById('reader-modal').classList.add('hidden');
+      document.getElementById('reader-modal').classList.remove('flex');
+    }
+
+    // Book Search via Open Library API
+    document.getElementById('book-search-btn').addEventListener('click', async () => {
+      const query = document.getElementById('book-search-input').value.trim();
+      if (!query) return;
+      const resultsContainer = document.getElementById('search-results');
+      resultsContainer.innerHTML = '<p class="col-span-4 text-center py-8 text-gray-500 font-medium">Searching Open Library...</p>';
+      
+      try {
+        const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=4`);
+        const data = await res.json();
+        if (data.docs && data.docs.length > 0) {
+          resultsContainer.innerHTML = '';
+          data.docs.forEach(book => {
+            const title = book.title || 'Untitled';
+            const author = book.author_name ? book.author_name[0] : 'Unknown Author';
+            const coverId = book.cover_i;
+            const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : 'https://images.pexels.com/photos/31396380/pexels-photo-31396380.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+            
+            const card = document.createElement('div');
+            card.className = 'panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200';
+            card.innerHTML = `
+              <div>
+                <div class="h-48 bg-emerald-100 rounded-xl overflow-hidden mb-4 relative">
+                  <img data-bc-template src="${coverUrl}" alt="${title}" class="w-full h-full object-cover">
+                </div>
+                <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Searched Book</span>
+                <h3 class="font-bold text-lg mt-3 font-heading">${title}</h3>
+                <p class="text-sm text-gray-600 mt-1">${author}</p>
+              </div>
+              <button onclick="addToMyList('${title.replace(/'/g, "")}', '${author.replace(/'/g, "")}', 'Want to Read')" class="mt-6 w-full bg-primary text-on-primary py-2.5 pill-btn text-sm font-semibold hover:opacity-90 transition">
+                + Add to Reading List
+              </button>
+            `;
+            resultsContainer.appendChild(card);
+          });
+        } else {
+          resultsContainer.innerHTML = '<p class="col-span-4 text-center py-8 text-gray-500 font-medium">No books found. Try another title.</p>';
+        }
+      } catch (e) {
+        resultsContainer.innerHTML = '<p class="col-span-4 text-center py-8 text-red-500 font-medium">Failed to fetch books. Please check your connection.</p>';
+      }
+    });
+
+    // Add to My Reading List
+    let readingList = store.get('bc_list', [
+      { title: 'Amar Dekha Naya China', author: 'Sheikh Mujibur Rahman', status: 'Want to Read' }
+    ]);
+
+    function renderReadingList() {
+      const container = document.getElementById('reading-list-container');
+      container.innerHTML = '';
+      if (readingList.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-500 text-center py-4">No books in your list yet.</p>';
+        return;
+      }
+      readingList.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-4 bg-emerald-50/50 rounded-xl border border-emerald-100';
+        div.innerHTML = `
+          <div>
+            <h4 class="font-bold font-heading">${item.title}</h4>
+            <p class="text-xs text-gray-500">${item.author} • ${item.status}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-secondary bg-orange-100 px-3 py-1 rounded-full">${item.status}</span>
+            <button onclick="removeListItem(${index})" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Remove</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+    renderReadingList();
+
+    function addToMyList(title, author, status) {
+      readingList.push({ title, author, status });
+      store.set('bc_list', readingList);
+      renderReadingList();
+      alert(`"${title}" added to your reading shelf!`);
+    }
+
+    function removeListItem(index) {
+      readingList.splice(index, 1);
+      store.set('bc_list', readingList);
+      renderReadingList();
+    }
+
+    // Custom Book Upload
+    function handleUploadSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('upload-title').value;
+      const author = document.getElementById('upload-author').value;
+      const price = document.getElementById('upload-price').value;
+
+      const libraryGrid = document.getElementById('library-grid');
+      const newCard = document.createElement('div');
+      newCard.className = 'panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between';
+      newCard.innerHTML = `
+        <div>
+          <div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative">
+            <img src="https://images.pexels.com/photos/34924810/pexels-photo-34924810.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Uploaded Book" class="w-full h-full object-cover">
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">Custom Upload</span>
+            <span class="text-xs font-bold text-gray-500">৳${price}.00</span>
+          </div>
+          <h3 class="font-bold text-xl font-heading">${title}</h3>
+          <p class="text-sm text-gray-600 mt-1">${author}</p>
+        </div>
+        <a href="#reader" onclick="openReader('${title}', '${author}')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn text-sm font-bold hover:opacity-90 transition shadow">
+          Read Online Now
+        </a>
+      `;
+      libraryGrid.insertBefore(newCard, libraryGrid.firstChild);
+      closeUploadModal();
+      document.getElementById('upload-form').reset();
+      alert('Book uploaded successfully to the digital library!');
+    }
+
+    // Community Post Handler
+    function handlePostSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('post-author').value;
+      const content = document.getElementById('post-content').value;
+      const tag = document.getElementById('post-tag').value;
+
+      const feed = document.getElementById('community-feed');
+      const postDiv = document.createElement('div');
+      postDiv.className = 'panel-box bg-white p-6 border border-emerald-100';
+      postDiv.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">${author.slice(0,2).toUpperCase()}</div>
+            <div>
+              <h4 class="font-bold text-sm font-heading">${author}</h4>
+              <span class="text-xs text-gray-400">Just now • ${tag}</span>
+            </div>
+          </div>
+          <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Post</span>
+        </div>
+        <p class="text-sm text-gray-700 leading-relaxed">${content}</p>
+        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center space-x-6 text-xs text-gray-500 font-semibold">
+          <button onclick="upvotePost(this)" class="flex items-center space-x-1.5 hover:text-primary transition">
+            <span>▲ Upvote</span> (<span class="vote-count">1</span>)
+          </button>
+          <span>0 comments</span>
+        </div>
+      `;
+      feed.insertBefore(postDiv, feed.firstChild);
+      document.getElementById('community-form').reset();
+    }
+
+    function upvotePost(btn) {
+      const span = btn.querySelector('.vote-count');
+      span.innerText = parseInt(span.innerText) + 1;
+    }
+  </script>bel class="block text-xs font-bold text-gray-700 mb-1">Book Title</label>
+          <input type="text" id="upload-title" placeholder="e.g. My Research Notes" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Author / Creator</label>
+          <input type="text" id="upload-author" placeholder="e.g. Tanvir Ahmed" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Category</label>
+          <select id="upload-category" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary">
+            <option value="Study Notes">Study Notes</option>
+            <option value="Classic Literature">Classic Literature</option>
+            <option value="Poetry">Poetry</option>
+            <option value="Research Paper">Research Paper</option>
+          </select>
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-secondary text-on-secondary py-3.5 pill-btn font-bold hover:opacity-90 transition shadow">
+            Upload & Publish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript handlers for interactive features
+    function openAddBookModal() {
+      const title = prompt("Enter custom book title:");
+      if (!title) return;
+      const author = prompt("Enter author name:") || "Unknown Author";
+      const listContainer = document.getElementById('reading-list-container');
+      const newCard = document.createElement('div');
+      newCard.className = "flex items-center justify-between p-4 bg-emerald-50/50 rounded-xl border border-emerald-100";
+      newCard.innerHTML = `<div><h4 class="font-bold font-heading">${title}</h4><p class="text-xs text-gray-500">${author} • Want to Read</p></div><div class="flex items-center gap-2"><span class="text-xs font-bold text-secondary bg-orange-100 px-3 py-1 rounded-full">Saved</span><button onclick="this.parentElement.parentElement.remove()" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Remove</button></div>`;
+      listContainer.prepend(newCard);
+    }
+
+    function removeListItem(btn) {
+      btn.closest('div.flex').parentElement.remove();
+    }
+
+    let progressVal = 64;
+    let currentPages = 230;
+    const totalPages = 360;
+
+    function updateProgress(pages) {
+      currentPages = Math.min(totalPages, currentPages + pages);
+      progressVal = Math.round((currentPages / totalPages) * 100);
+      document.getElementById('progress-bar').style.width = progressVal + '%';
+      document.getElementById('progress-text').innerText = progressVal + '% (' + currentPages + ' / ' + totalPages + ' pages)';
+    }
+
+    function markCompleted() {
+      currentPages = totalPages;
+      progressVal = 100;
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('progress-text').innerText = '100% (Completed)';
+      let completedCount = document.getElementById('stat-completed');
+      completedCount.innerText = parseInt(completedCount.innerText) + 1;
+      alert('Congratulations on completing the book!');
+    }
+
+    function openUploadModal() {
+      document.getElementById('upload-modal').classList.remove('hidden');
+      document.getElementById('upload-modal').classList.add('flex');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('upload-modal').classList.remove('flex');
+      document.getElementById('upload-modal').classList.add('hidden');
+    }
+
+    function handleUploadSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('upload-title').value;
+      const author = document.getElementById('upload-author').value;
+      const category = document.getElementById('upload-category').value;
+      
+      const libraryGrid = document.getElementById('library-grid');
+      const newBookCard = document.createElement('div');
+      newBookCard.className = "panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between";
+      newBookCard.innerHTML = `<div><div class="h-52 bg-emerald-50 rounded-xl overflow-hidden mb-4 relative flex items-center justify-center text-primary font-bold text-lg">${title}</div><div class="flex justify-between items-center mb-2"><span class="bg-emerald-100 text-primary text-xs font-bold px-2.5 py-1 rounded-full">${category}</span><span class="text-xs font-bold text-gray-500">৳0.00</span></div><h3 class="font-bold text-xl font-heading">${title}</h3><p class="text-sm text-gray-600 mt-1">${author}</p></div><a href="#reader" onclick="openReader('${title}', '${author}')" class="mt-6 w-full text-center bg-secondary text-on-secondary py-3 pill-btn font-bold hover:opacity-90 transition shadow">Read Online Now</a>`;
+      libraryGrid.insertBefore(newBookCard, libraryGrid.firstChild);
+      closeUploadModal();
+      document.getElementById('upload-form').reset();
+      alert('Your book has been successfully uploaded to the digital library!');
+    }
+
+    function openReader(title, author) {
+      document.getElementById('reader-title').innerText = title;
+      document.getElementById('reader-author').innerText = author;
+      const readerModal = document.getElementById('reader-modal');
+      readerModal.classList.remove('hidden');
+      readerModal.classList.add('flex');
+    }
+
+    function closeReader() {
+      const readerModal = document.getElementById('reader-modal');
+      readerModal.classList.remove('flex');
+      readerModal.classList.add('hidden');
+    }
+
+    function handlePostSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('post-author').value;
+      const content = document.getElementById('post-content').value;
+      const tag = document.getElementById('post-tag').value;
+
+      const feed = document.getElementById('community-feed');
+      const postDiv = document.createElement('div');
+      postDiv.className = "panel-box bg-white p-6 border border-emerald-100";
+      postDiv.innerHTML = `<div class="flex items-center justify-between mb-3"><div class="flex items-center space-x-3"><div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">${author.slice(0,2).toUpperCase()}</div><div><h4 class="font-bold text-sm font-heading">${author}</h4><span class="text-xs text-gray-400">Just now • ${tag}</span></div></div><span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Discussion</span></div><p class="text-sm text-gray-700 leading-relaxed">${content}</p><div class="mt-4 pt-4 border-t border-gray-100 flex items-center space-x-6 text-xs text-gray-500 font-semibold"><button onclick="upvotePost(this)" class="flex items-center space-x-1.5 hover:text-primary transition"><span>▲ Upvote</span> (<span class="vote-count">1</span>)</button><span>0 comments</span></div>`;
+      feed.insertBefore(postDiv, feed.firstChild);
+      document.getElementById('community-form').reset();
+    }
+
+    function upvotePost(btn) {
+      const countSpan = btn.querySelector('.vote-count');
+      countSpan.innerText = parseInt(countSpan.innerText) + 1;
+    }
+
+    // Live Book Search API integration with Open Library
+    document.getElementById('book-search-btn').addEventListener('click', async () => {
+      const query = document.getElementById('book-search-input').value.trim();
+      if(!query) return;
+      const resultsContainer = document.getElementById('search-results');
+      resultsContainer.innerHTML = `<div class="col-span-4 text-center py-8 text-primary font-bold">Searching books...</div>`;
+      
+      try {
+        const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=4`);
+        const data = await res.json();
+        resultsContainer.innerHTML = '';
+        
+        if(!data.docs || data.docs.length === 0) {
+          resultsContainer.innerHTML = `<div class="col-span-4 text-center py-8 text-gray-500">No books found. Try another title.</div>`;
+          return;
+        }
+
+        data.docs.forEach(book => {
+          const title = book.title || 'Untitled';
+          const author = book.author_name ? book.author_name.join(', ') : 'Unknown Author';
+          const coverId = book.cover_i;
+          const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : 'https://images.pexels.com/photos/38014845/pexels-photo-38014845.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+          
+          const card = document.createElement('div');
+          card.className = "panel-box bg-white p-6 border border-gray-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200";
+          card.innerHTML = `
+            <div>
+              <div class="h-48 bg-emerald-100 rounded-xl overflow-hidden mb-4 relative">
+                <img data-bc-template src="${coverUrl}" alt="${title}" class="w-full h-full object-cover">
+              </div>
+              <span class="bg-secondary/20 text-ink text-xs font-bold px-2.5 py-1 rounded-full">Fetched Book</span>
+              <h3 class="font-bold text-lg mt-3 font-heading">${title}</h3>
+              <p class="text-sm text-gray-600 mt-1">${author}</p>
+            </div>
+            <button onclick="addToMyList('${title.replace(/'/g, "")}', '${author.replace(/'/g, "")}', 'Want to Read')" class="mt-6 w-full bg-primary text-on-primary py-2.5 pill-btn text-sm font-semibold hover:opacity-90 transition">
+              + Add to Reading List
+            </button>
+          `;
+          resultsContainer.appendChild(card);
+        });
+      } catch (err) {
+        resultsContainer.innerHTML = `<div class="col-span-4 text-center py-8 text-red-500">Failed to fetch books. Please check connection.</div>`;
+      }
+    });
+
+    function addToMyList(title, author, status) {
+      const listContainer = document.getElementById('reading-list-container');
+      const item = document.createElement('div');
+      item.className = "flex items-center justify-between p-4 bg-emerald-50/50 rounded-xl border border-emerald-100";
+      item.innerHTML = `
+        <div>
+          <h4 class="font-bold font-heading">${title}</h4>
+          <p class="text-xs text-gray-500">${author} • ${status}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-secondary bg-orange-100 px-3 py-1 rounded-full">Saved</span>
+          <button onclick="removeListItem(this)" class="text-red-500 hover:text-red-700 text-xs font-bold px-2 py-1">Remove</button>
+        </div>
+      `;
+      listContainer.prepend(item);
+      alert(`'${title}' added to your reading shelf!`);
+    }
+
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+  </script>
+<footer data-bc-credit-wrap><div data-bc-credit style="font-size:12px;line-height:1.6;opacity:.8;text-align:center;margin:12px auto 0;padding:0 16px">Photos: <a href="https://www.pexels.com/photo/brown-wooden-shelf-with-books-10027581/" rel="noopener" target="_blank" style="color:inherit">Osman Özümüt</a>, <a href="https://www.pexels.com/photo/photography-of-books-on-bookshelf-1098601/" rel="noopener" target="_blank" style="color:inherit">Suzy Hazelwood</a>, <a href="https://www.pexels.com/photo/books-on-brown-wooden-shelves-inside-a-room-14447171/" rel="noopener" target="_blank" style="color:inherit">Matteo Angeloni</a> <details style="display:inline"><summary style="display:inline;cursor:pointer">and 6 more</summary> <a href="https://www.pexels.com/photo/cozy-library-bookshelf-with-diverse-collection-37165246/" rel="noopener" target="_blank" style="color:inherit">Melike</a>, <a href="https://www.pexels.com/photo/shelves-with-books-in-a-library-13695499/" rel="noopener" target="_blank" style="color:inherit">Elif Gökçe</a>, <a href="https://www.pexels.com/photo/joyful-woman-with-sherlock-holmes-books-in-library-34919026/" rel="noopener" target="_blank" style="color:inherit">Sóc Năng Động</a>, <a href="https://www.pexels.com/photo/colorful-book-display-in-a-uk-bookshop-window-38769723/" rel="noopener" target="_blank" style="color:inherit">Maryia Babuchenka</a>, <a href="https://www.pexels.com/photo/cozy-book-nook-with-afternoon-sunlight-34924812/" rel="noopener" target="_blank" style="color:inherit">Suhas Hanjar</a>, <a href="https://www.pexels.com/photo/organized-bookshelf-display-in-canakkale-bookshop-31396380/" rel="noopener" target="_blank" style="color:inherit">Ersan Yılmaz</a></details> · <a href="https://www.pexels.com" rel="noopener" target="_blank" style="color:inherit;font-weight:600">Pexels</a></div></footer>
+<style>@media(prefers-reduced-motion:no-preference){:where(.bc-reveal){opacity:0;transform:translateY(6px);transition:opacity .3s ease-out,transform .4s ease-out}:where(.bc-reveal.bc-in){opacity:1;transform:none}}@media print{:where(.bc-reveal){opacity:1;transform:none}}</style><script>(function(){try{var els=document.querySelectorAll('section');if(els.length<3||!('IntersectionObserver'in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('bc-in');io.unobserve(e.target)}})},{threshold:.08});els.forEach(function(el){el.classList.add('bc-reveal');io.observe(el)})}catch(e){}})()</script>
+<script id="bc-logo-contrast">(function(){try{
+var L=function(c){var m=String(c).match(/[\d.]+/g);if(!m||m.length<3||(m.length>3&&+m[3]<0.5))return null;var f=function(v){v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)};return 0.2126*f(+m[0])+0.7152*f(+m[1])+0.0722*f(+m[2])};
+document.querySelectorAll('[data-bc-logo]').forEach(function(a){var e=a.parentElement,b=null;while(e&&e!==document.body&&e!==document.documentElement){var s=getComputedStyle(e);if(s.backgroundImage&&s.backgroundImage!=='none')return;b=L(s.backgroundColor);if(b!==null)break;e=e.parentElement}if(b===null)return;var t=L(getComputedStyle(a).color);if(t===null)return;if((Math.max(b,t)+0.05)/(Math.min(b,t)+0.05)<3)a.style.color=b<0.18?'#fff':'#111'})
+}catch(e){}})()</script>
+</body>
+</html>
